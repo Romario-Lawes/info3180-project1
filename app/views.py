@@ -57,10 +57,8 @@ def get_uploaded_images():
             photos.append(os.path.join(app.config['UPLOAD_FOLDER'][21:], file))
     photos.sort()
     del photos[0]
-    print photos
     return photos
 
-get_uploaded_images()
 
 @app.route('/files')
 def files():
