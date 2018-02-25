@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+{% for photo in photos %}
+<li><img src="{{ url_for('static', filename='uploads/' + photo) }}"></img></li>
+{% endfor %}
+
+{% endblock %}
