@@ -1,14 +1,98 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-    padding-top: 5rem;
+  padding-top: 5rem;
 }
 
-.grid-wrapper {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    grid-gap: 20px;
+textarea {
+  resize: none;
 }
 
-.grid-item img {
-    max-width: 100%;
-    height: auto;
+.profile-card, .user-card {
+  position: relative;
+  float: left;
+  width: 100%;
+  margin-top: 20px;
+  padding: 25px;
+  border-radius: 8px;
+  border: 1px solid #e2e2e2;
+  border-top: 7px solid #007bff;
+  box-shadow: 0px 0px 8px #cacaca;
+}
+
+.user-card {
+  padding: 50px;
+  margin-top: 40px;
+}
+
+/*#photo {float: left;}*/
+
+#photo img {
+  width: 120px;
+  height: 120px;
+}
+
+#photo-large img {
+  width: 150px;
+  height: 150px;
+}
+
+.profile-info {
+  position: absolute;
+  color: #676767;
+  font-size: 1.15rem;
+  float: left;
+  margin-left: 25px;
+  bottom: 25px;
+  line-height: 35px;
+}
+
+.user-info {
+  position: absolute;
+  color: #676767;
+  font-size: 1.15rem;
+  float: left;
+  margin-left: 25px;
+  top: 25px;
+  right: 50px;
+  line-height: 35px;
+}
+
+.about {
+  font-size: 1.15rem;
+  color: #676767;
+  margin-top: 25px;
+}
+
+.name, .about-me {
+  font-weight: bold;
+}
+
+.gender {
+  text-transform: capitalize;
+}
+
+#view-profile-btn {
+  float: right;
+  text-align: center;
+  color: white;
+	background-color: mediumspringgreen;
+	width: 200px;
+	border-radius: 10px;
+	font-weight: bold;
+	font-size: 1.15rem;
+  line-height: 45px;
+  margin-right: 60px;
+  margin-top: 35px;
+}
+
+#view-profile-btn:hover {
+	cursor: pointer;
+	background-color: deepskyblue;
+}
+
+#add-btn {
+  margin-top: 1rem;
 }

@@ -4,11 +4,12 @@ Jinja2 Documentation:    http://jinja.pocoo.org/2/documentation/
 Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
-import os
-from app import app
+import os, datetime
+from app import app, db
+from app.models import UserProfile
 from flask import render_template, request, redirect, url_for, flash, session, abort
 from werkzeug.utils import secure_filename
-from forms import UploadForm
+from forms import ProfileForm
 
 
 ###
@@ -26,67 +27,45 @@ def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
 
-
-@app.route('/upload', methods=['POST', 'GET'])
-def upload():
-    if not session.get('logged_in'):
-        abort(401)
-
-    # Instantiate your form class
-    imageform = UploadForm()
-
-    # Validate file upload on submit
-    if request.method == 'POST' and imageform.validate_on_submit():
-        # Get file data and save to your uploads folder
-        image = imageform.image.data
-        filename = secure_filename(image.filename)
-        image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-        flash('File Saved', 'success')
-        return redirect(url_for('home'))
+@app.route('/profile', methods=['POST', 'GET'])
+def profile():
+    profileForm = ProfileForm()
+    
+    if request.method == 'POST' and profileForm.validate_on_submit():
+        firstname = profileForm.firstname.data
+        lastname = profileForm.lastname.data
+        email = profileForm.email.data
+        location = profileForm.location.data
+        gender = profileForm.gender.data
+        bio = profileForm.biography.data
         
-    flash_errors(imageform)
-    return render_template('upload.html', form=imageform)
-
-
-def get_uploaded_images():
-    rootdir = os.getcwd()
-    photos = []
-    for subdir, dirs, files in os.walk(rootdir + app.config['UPLOAD_FOLDER'][1:]):
-        for file in files:
-            photos.append(os.path.join(app.config['UPLOAD_FOLDER'][21:], file))
-    photos.sort()
-    del photos[0]
-    return photos
-
-
-@app.route('/files')
-def files():
-    if not session.get('logged_in'):
-        abort(401)
+        photo = profileForm.photo.data
+        imageName = secure_filename(photo.filename)
+        photo.save(os.path.join(app.config['UPLOAD_FOLDER'], imageName))
         
-    return render_template('files.html', photos=get_uploaded_images())
+        created_on = datetime.datetime.now().strftime("%B, %d %Y")
+        
+        user = UserProfile(firstname, lastname, email, location, gender, bio, imageName, created_on)
+        db.session.add(user)
+        db.session.commit()
+        
+        flash('Profile Successfully Added', 'success')
+        return redirect(url_for("profiles"))
+    flash_errors(profileForm)
+    return render_template('profile.html', form=profileForm)
 
 
-@app.route('/login', methods=['POST', 'GET'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != app.config['USERNAME'] or request.form['password'] != app.config['PASSWORD']:
-            error = 'Invalid username or password'
-        else:
-            session['logged_in'] = True
-            
-            flash('You were logged in', 'success')
-            return redirect(url_for('upload'))
-    return render_template('login.html', error=error)
+@app.route('/profiles')
+def profiles():
+    users = db.session.query(UserProfile).all()
+    return render_template('profiles.html', users=users)
 
 
-@app.route('/logout')
-def logout():
-    session.pop('logged_in', None)
-    flash('You were logged out', 'success')
-    return redirect(url_for('home'))
+@app.route('/profile/<userid>')
+def userProfile(userid):
+    user = UserProfile.query.filter_by(id=userid).first()
+    return render_template('user_profile.html', user=user)
+
 
 
 ###

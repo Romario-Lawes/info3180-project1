@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+{% include 'flash_messages.html' %}
+
+<div class="user-card">
+  <span id="photo-large"><img src="{{ url_for('static', filename='uploads/' + user.photo) }}"></img></span> 
+  <span class="user-info">
+    <span class="name">{{user.firstname}} {{user.lastname}}</span></br>
+    <span class="email"><i class="fa fa-envelope-o"></i> {{user.email}}</span></br>
+    <span class="location"><i class="fa fa-map-marker"></i> {{user.location}}</span></br>
+    <span class="joined"><i class="fa fa-calendar-check-o"></i> {{user.created_on}}</span></br>
+  </span></br>
+  <div class="about">
+    <p class="about-me">About Me</p>
+    <div class="bio">{{ user.bio }}</div>
+  </div>
+</div>
+
+{% endblock %}
