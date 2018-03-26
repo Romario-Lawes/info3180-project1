@@ -13,7 +13,7 @@
     <span class="gender"><i class="fa fa-user-o"></i> {{user.gender}}</span></br>
     <span class="location"><i class="fa fa-map-marker"></i> {{user.location}}</span></br>
   </span>
-  <a href="{{ url_for('userProfile', userid=user.id) }}"><span id="view-profile-btn">View Profile</span></a>
+  <a href="{{ url_for('userProfile', userid=user.id) }}"><span class="profile-btn" id="view-profile-btn">View Profile</span></a>
 </div>
 {% endfor %}
 

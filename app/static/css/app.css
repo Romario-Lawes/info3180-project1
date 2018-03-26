@@ -74,8 +74,7 @@ textarea {
   text-transform: capitalize;
 }
 
-#view-profile-btn {
-  float: right;
+.profile-btn {
   text-align: center;
   color: white;
 	background-color: mediumspringgreen;
@@ -84,15 +83,37 @@ textarea {
 	font-weight: bold;
 	font-size: 1.15rem;
   line-height: 45px;
-  margin-right: 60px;
   margin-top: 35px;
 }
 
-#view-profile-btn:hover {
+#msg-btn {
+  float: left;
+}
+
+#follow-btn {
+  float: right;
+  background-color: deepskyblue;
+}
+
+#view-profile-btn {
+  float: right;
+  margin-right: 60px;
+}
+
+#view-profile-btn:hover, #msg-btn:hover {
 	cursor: pointer;
 	background-color: deepskyblue;
 }
 
+#follow-btn:hover {
+	cursor: pointer;
+	background-color: mediumspringgreen;
+}
+
 #add-btn {
   margin-top: 1rem;
+}
+
+.btns {
+  margin: auto;
 }
